@@ -175,7 +175,7 @@
       const data = Object.fromEntries(formData.entries());
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_ID/exec', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
