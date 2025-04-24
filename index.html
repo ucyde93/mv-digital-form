@@ -1,117 +1,296 @@
-<div class="card" id="formCard">
-  <h2>📝 Subscription Request</h2>
-  <p>Fill the form to subscribe. You'll receive payment instructions via email.</p>
-
-  <form id="customerForm">
-    <label>👤 Full Name</label>
-    <input type="text" name="name" required>
-
-    <label>📞 Contact Number</label>
-    <input type="tel" name="contact" required>
-
-    <label>📧 Email Address</label>
-    <input type="email" name="email" required>
-
-    <label>🛠️ Request Type</label>
-    <select name="requestType" required>
-      <option value="new">New Subscription</option>
-      <option value="renew">Renew Existing</option>
-    </select>
-
-    <label>🧩 Service</label>
-    <select name="service" id="service" required>
-      <option value="ChatGPT">ChatGPT Pro</option>
-      <option value="Microsoft 365">Microsoft 365</option>
-      <option value="Canva Pro">Canva Pro</option>
-      <option value="Duolingo">Duolingo</option>
-      <option value="Assignment Check">Assignment Check</option>
-      <option value="Perplexity">Perplexity Pro</option>
-      <option value="Amazon Prime Video">Amazon Prime Video</option>
-      <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
-    </select>
-
-    <label>⏳ Duration</label>
-    <select name="duration" id="duration" required>
-      <option>1 Month</option>
-      <option>6 Months</option>
-      <option>1 Year</option>
-    </select>
-
-    <label>🗒️ Notes / Ref</label>
-    <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
-
-    <input type="hidden" id="price" name="amount" required>
-
-    <div class="price-summary sticky" id="priceDisplay">
-      🛒 Total Price
-      <span>MVR 0 ($0.00)</span>
-    </div>
-
-    <button type="submit">Submit</button>
-  </form>
-</div>
-
-<script>
-  document.getElementById('startButton').onclick = () => {
-    document.getElementById('landingPage').style.display = 'none';
-    document.getElementById('formCard').style.display = 'block';
-  };
-
-  const priceMap = {
-    "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
-    "Microsoft 365": { "1 Year": 500, "1 Month": 70 },
-    "Canva Pro": { "1 Year": 150 },
-    "Duolingo": { "1 Year": 150 },
-    "Assignment Check": {
-      "Basic AI Detection": 50,
-      "AI Bypass": 100,
-      "AI Bypass Plus": 300
-    },
-    "Perplexity": { "1 Year": 200 },
-    "Amazon Prime Video": { "1 Year": 999 },
-    "Adobe Creative Cloud": { "1 Month": 450 }
-  };
-
-  const serviceEl = document.getElementById('service');
-  const durationEl = document.getElementById('duration');
-  const priceInput = document.getElementById('price');
-  const priceDisplay = document.getElementById('priceDisplay').querySelector('span');
-
-  function updatePrice() {
-    const service = serviceEl.value;
-    const duration = durationEl.value;
-    const price = priceMap[service]?.[duration];
-
-    if (price !== undefined) {
-      const usd = (price / 15.42).toFixed(2);
-      priceInput.value = `MVR ${price}`;
-      priceDisplay.textContent = `MVR ${price} ($${usd})`;
-    } else {
-      priceInput.value = "";
-      priceDisplay.textContent = "Unavailable";
+<!-- Final HTML code starts here -->
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d1a26;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      min-height: 100vh;
+      flex-direction: column;
     }
-  }
 
-  serviceEl.onchange = updatePrice;
-  durationEl.onchange = updatePrice;
-  window.onload = updatePrice;
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      .card { padding: 15px; width: 100%; }
+      .price-summary.sticky {
+        position: sticky;
+        bottom: 0; left: 0; right: 0;
+        z-index: 999;
+      }
+    }
 
-  document.getElementById('customerForm').onsubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
+    .card, .how-it-works {
+      background-color: #ffffff;
+      color: #333;
+      border-radius: 12px;
+      padding: 20px 25px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease;
+      margin: auto;
+      display: none;
+    }
 
-    try {
-      const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_ID/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #landingPage {
+      text-align: center;
+      color: #fff;
+      max-width: 420px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    #landingPage p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    #startButton, .continueButton, button[type="submit"] {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #e84545;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #cc3c3c;
+    }
+
+    .price-summary {
+      background-color: #0d1a26;
+      color: white;
+      border-radius: 10px;
+      padding: 16px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .price-summary span {
+      display: block;
+      font-size: 26px;
+      margin-top: 5px;
+      font-weight: 700;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.85em;
+      display: block;
+      margin: 10px 0 4px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    #perkDisplay ul { padding-left: 20px; }
+    #perkDisplay ul li { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div id="landingPage">
+    <h2>👋 Welcome to MV Digital Tools</h2>
+    <p>Are you ready to save up to 90% on Subscription services? 🚀</p>
+    <button id="startButton">Yes</button>
+  </div>
+
+  <div class="how-it-works" id="howItWorks">
+    <h2>🔍 How It Works</h2>
+    <ul>
+      <li>1. Select the service and duration you want</li>
+      <li>2. Submit the form with your details</li>
+      <li>3. Get payment instructions & complete payment</li>
+      <li>4. You'll be added within 24 hours to the shared subscription</li>
+    </ul>
+    <button class="continueButton" id="continueToForm">Continue</button>
+  </div>
+
+  <div class="card" id="formCard">
+    <h2>📝 Subscription Request</h2>
+    <p>Fill the form to subscribe. You'll receive payment instructions via email.</p>
+    <form id="customerForm">
+      <label>👤 Full Name</label>
+      <input type="text" name="name" required>
+
+      <label>📞 Contact Number</label>
+      <input type="tel" name="contact" required>
+
+      <label>📧 Email Address</label>
+      <input type="email" name="email" required>
+
+      <label>🛠️ Request Type</label>
+      <select name="requestType" required>
+        <option value="new">New Subscription</option>
+        <option value="renew">Renew Existing</option>
+      </select>
+
+      <label>🧩 Service</label>
+      <select name="service" id="service" required>
+        <option value="ChatGPT">ChatGPT Pro</option>
+        <option value="Microsoft 365">Microsoft 365</option>
+        <option value="Canva Pro">Canva Pro</option>
+        <option value="Duolingo">Duolingo</option>
+        <option value="Assignment Check">Assignment Check</option>
+        <option value="Perplexity">Perplexity Pro</option>
+        <option value="Amazon Prime Video">Amazon Prime Video</option>
+        <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
+      </select>
+
+      <label>⏳ Duration</label>
+      <select name="duration" id="duration" required></select>
+
+      <div id="perkDisplay">
+        <strong>What do you get:</strong>
+      </div>
+
+      <label>🗒️ Notes / Ref</label>
+      <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
+
+      <input type="hidden" id="price" name="amount" required>
+      <div class="price-summary sticky" id="priceDisplay">
+        🛒 Total Price
+        <span>MVR 0 ($0.00)</span>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const priceMap = {
+      "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
+      "Microsoft 365": { "1 Year": 500 },
+      "Canva Pro": { "1 Year": 150 },
+      "Duolingo": { "1 Year": 150 },
+      "Assignment Check": {
+        "Basic AI Detection": 50,
+        "AI Bypass": 100,
+        "AI Bypass Plus": 300
+      },
+      "Perplexity": { "1 Year": 200 },
+      "Amazon Prime Video": { "1 Year": 999 },
+      "Adobe Creative Cloud": { "1 Month": 450 }
+    };
+
+    const durationOptions = {
+      "ChatGPT": ["1 Month", "6 Months", "1 Year"],
+      "Microsoft 365": ["1 Year"],
+      "Canva Pro": ["1 Year"],
+      "Duolingo": ["1 Year"],
+      "Assignment Check": ["Basic AI Detection", "AI Bypass", "AI Bypass Plus"],
+      "Perplexity": ["1 Year"],
+      "Amazon Prime Video": ["1 Year"],
+      "Adobe Creative Cloud": ["1 Month"]
+    };
+
+    const perksMap = {
+      "ChatGPT Pro": ["Priority access to GPT-4", "Faster response times", "Improved performance during peak hours"],
+      "Microsoft 365": ["Full access to Word, Excel, PowerPoint", "1TB OneDrive cloud storage", "Outlook email & calendar", "Install on up to 5 devices"],
+      "Canva Pro": ["Unlimited premium templates & elements", "Magic Resize and Background Remover", "Brand Kit and content planner", "Team collaboration features"],
+      "Duolingo": ["No ads", "Unlimited hearts (mistakes)", "Personalized practice", "Mastery quizzes and offline access"],
+      "Adobe Creative Cloud": ["Photoshop, Illustrator, Premiere Pro & more", "100GB cloud storage", "Fonts, stock assets, and portfolio tools", "Cross-device app sync"],
+      "Amazon Prime Video": ["Unlimited streaming of movies and series", "Exclusive Prime Originals", "Watch on multiple devices", "Offline downloads"],
+      "Perplexity Pro": ["Faster and more accurate answers", "Expanded answer formatting", "Sources and citations in context", "No daily usage limits"],
+      "Assignment Check": [
+        "Basic AI Detection - Basic detection on all major AI Detectors including Turnitin + MVR 15 per extra run",
+        "AI Bypass - Changes for 0% detection + MVR 25 per correction/run",
+        "AI Bypass Plus - All features + unlimited submissions"
+      ]
+    };
+
+    const serviceEl = document.getElementById("service");
+    const durationEl = document.getElementById("duration");
+    const priceInput = document.getElementById("price");
+    const priceDisplay = document.getElementById("priceDisplay").querySelector("span");
+
+    function updateDurationOptions() {
+      const service = serviceEl.value;
+      durationEl.innerHTML = "";
+      (durationOptions[service] || []).forEach(d => {
+        const opt = document.createElement("option");
+        opt.value = d;
+        opt.textContent = d;
+        durationEl.appendChild(opt);
       });
-      const result = await res.json();
-      alert('✅ Request submitted successfully!');
-      e.target.reset();
-    } catch (err) {
-      alert('❌ Something went wrong. Please try again later.');
+      updatePrice(); updatePerks();
     }
-  };
-</script>
+
+    function updatePerks() {
+      const service = serviceEl.value;
+      const label = service === "ChatGPT" ? "ChatGPT Pro" : service === "Perplexity" ? "Perplexity Pro" : service;
+      const perks = perksMap[label] || [];
+      const container = document.getElementById("perkDisplay");
+      container.innerHTML = "<strong>What do you get:</strong>";
+      const ul = document.createElement("ul");
+      perks.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        ul.appendChild(li);
+      });
+      container.appendChild(ul);
+    }
+
+    function updatePrice() {
+      const service = serviceEl.value;
+      const duration = durationEl.value;
+      const price = priceMap[service]?.[duration];
+      if (price !== undefined) {
+        priceInput.value = `MVR ${price}`;
+        priceDisplay.textContent = `MVR ${price} ($${(price / 15.42).toFixed(2)})`;
+      } else {
+        priceInput.value = "";
+        priceDisplay.textContent = "Unavailable";
+      }
+    }
+
+    serviceEl.onchange = updateDurationOptions;
+    durationEl.onchange = () => { updatePrice(); updatePerks(); };
+
+    document.getElementById("startButton").onclick = () => {
+      document.getElementById("landingPage").style.display = "none";
+      document.getElementById("howItWorks").style.display = "block";
+    };
+
+    document.getElementById("continueToForm").onclick = () => {
+      document.getElementById("howItWorks").style.display = "none";
+      document.getElementById("formCard").style.display = "block";
+      updateDurationOptions();
+    };
+
+    document.getElementById("customerForm").onsubmit = function(e) {
+      e.preventDefault();
+      alert("✅ Your request has been submitted.\n\n💳 Please transfer the payment to:\n🏦 BML: 7704519614002\n👤 Usaid Abdul Sattar\n\n📨 Send the transfer slip to: Viber 7566658");
+      this.reset();
+      updateDurationOptions();
+    };
+  </script>
+</body>
+</html>
+<!-- Final HTML code ends here -->
