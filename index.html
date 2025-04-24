@@ -151,7 +151,7 @@
     </div>
   </div>
 
-  <script>
+<script>
   function showForm() {
     document.getElementById('landing').style.display = 'none';
     document.getElementById('formCard').style.display = 'block';
@@ -184,7 +184,11 @@
     "Microsoft 365": ["Access to Word, Excel, PowerPoint", "1TB OneDrive Cloud Storage", "Install on 5 devices"],
     "Canva Pro": ["Unlimited premium templates & elements", "Magic Resize, Background Remover", "Brand Kit and content planner"],
     "Duolingo": ["Ad-free experience", "Unlimited hearts (mistakes)", "Offline access"],
-    "Assignment Check": ["AI detection report (Turnitin, GPTZero, etc.)", "No repository saving", "Fast 1–2 hr report"],
+    "Assignment Check": [
+      "AI detection report (Turnitin, GPTZero, etc.)",
+      "No repository saving",
+      "Fast 1–2 hr report"
+    ],
     "Perplexity": ["Faster and accurate answers", "Cited responses", "No usage limits"],
     "Amazon Prime Video": ["Exclusive Prime Originals", "Offline downloads", "Watch on multiple devices"],
     "Adobe Creative Cloud": ["Access to Photoshop, Illustrator & more", "100GB Cloud storage", "Creative asset library"]
@@ -242,28 +246,29 @@
   document.getElementById("customerForm").onsubmit = function(e) {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(this).entries());
+    const query = new URLSearchParams(data).toString();
+    const callbackName = "jsonpCallback_" + Date.now();
 
-    fetch("https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
-    })
-    .then(res => res.json())
-    .then(response => {
+    window[callbackName] = function(response) {
       if (response.status === "success") {
         alert("✅ Request submitted! Check your email.");
-        this.reset();
-        updateDurationOptions(); // Reapply default state
+        document.getElementById("customerForm").reset();
+        updateDurationOptions();
       } else {
         alert("❌ Submission failed. Try again later.");
       }
-    })
-    .catch(err => {
+      delete window[callbackName];
+    };
+
+    const script = document.createElement("script");
+    script.src = `https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec?${query}&callback=${callbackName}`;
+    script.onerror = function() {
       alert("❌ Network error. Please try again.");
-      console.error(err);
-    });
+    };
+    document.body.appendChild(script);
   };
 </script>
+
 
 </body>
 </html>
