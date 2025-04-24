@@ -11,7 +11,7 @@
       height: 100%;
       background-color: #0d1a26;
       font-family: 'Segoe UI', sans-serif;
-      overflow: hidden; /* hide browser scrollbar when iframe is shown */
+      overflow: hidden;
     }
 
     .container {
@@ -48,14 +48,19 @@
       background-color: #cc3c3c;
     }
 
-    .iframe-fullscreen {
-      position: absolute;
+    .iframe-wrapper {
+      position: fixed;
       top: 0;
       left: 0;
-      height: 100vh;
+      height: 100dvh; /* fixes mobile cutoff on iOS */
       width: 100vw;
-      border: none;
       display: none;
+    }
+
+    iframe {
+      height: 100%;
+      width: 100%;
+      border: none;
     }
 
     @keyframes fadeIn {
@@ -71,19 +76,20 @@
     <button class="button" onclick="showIframe()">Let's Get Started</button>
   </div>
 
-  <iframe
-    id="iframeForm"
-    class="iframe-fullscreen"
-    src="https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec"
-    allowfullscreen
-    loading="lazy"
-    referrerpolicy="no-referrer">
-  </iframe>
+  <div class="iframe-wrapper" id="iframeWrapper">
+    <iframe
+      id="iframeForm"
+      src="https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer">
+    </iframe>
+  </div>
 
   <script>
     function showIframe() {
       document.getElementById("landingPage").style.display = "none";
-      document.getElementById("iframeForm").style.display = "block";
+      document.getElementById("iframeWrapper").style.display = "block";
     }
   </script>
 </body>
