@@ -5,92 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MV Digital Tools</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background-color: #0d1a26;
+    body {
       font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
-
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 30px 20px;
-      text-align: center;
+      background-color: #0d1a26;
       color: white;
-      animation: fadeIn 0.8s ease;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
     }
-
-    h2 {
-      font-size: 1.8em;
-      margin-bottom: 10px;
+    .card {
+      background: #fff;
+      color: #333;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 420px;
+      width: 100%;
     }
-
-    p {
-      font-size: 1.1em;
-      margin-bottom: 20px;
-    }
-
-    .button {
-      padding: 12px 24px;
-      font-size: 16px;
+    label {
       font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    button {
       background-color: #e84545;
       color: white;
       border: none;
       border-radius: 8px;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
       cursor: pointer;
     }
-
-    .button:hover {
+    button:hover {
       background-color: #cc3c3c;
-    }
-
-    .iframe-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100dvh; /* fixes mobile cutoff on iOS */
-      width: 100vw;
-      display: none;
-    }
-
-    iframe {
-      height: 100%;
-      width: 100%;
-      border: none;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="landingPage">
-    <h2>Welcome to MV Digital Tools</h2>
-    <p>Are you ready to save up tp 90% on Subscription services? 🚀</p>
-    <button class="button" onclick="showIframe()">Let's Get Started</button>
-  </div>
+  <div class="card">
+    <h2>📝 Subscription Request</h2>
+    <form id="customerForm">
+      <label>Full Name</label>
+      <input type="text" name="name" required />
 
-  <div class="iframe-wrapper" id="iframeWrapper">
-    <iframe
-      id="iframeForm"
-      src="https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec"
-      allowfullscreen
-      loading="lazy"
-      referrerpolicy="no-referrer">
-    </iframe>
+      <label>Contact Number</label>
+      <input type="tel" name="contact" required />
+
+      <label>Email Address</label>
+      <input type="email" name="email" required />
+
+      <label>Service</label>
+      <select name="service" required>
+        <option value="ChatGPT">ChatGPT Pro</option>
+        <option value="Microsoft 365">Microsoft 365</option>
+        <option value="Canva Pro">Canva Pro</option>
+        <option value="Duolingo">Duolingo</option>
+        <option value="Assignment Check">Assignment Check</option>
+        <option value="Perplexity">Perplexity Pro</option>
+        <option value="Amazon Prime Video">Amazon Prime Video</option>
+        <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
+      </select>
+
+      <label>Duration</label>
+      <input type="text" name="duration" required />
+
+      <label>Amount Paid</label>
+      <input type="text" name="amount" required />
+
+      <label>Notes / Ref</label>
+      <textarea name="notes" rows="3"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
   </div>
 
   <script>
-    function showIframe() {
-      document.getElementById("landingPage").style.display = "none";
-      document.getElementById("iframeWrapper").style.display = "block";
-    }
+    const form = document.getElementById('customerForm');
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      const callbackName = 'cb_' + Date.now();
+
+      window[callbackName] = function(response) {
+        alert('✅ Submitted! You will receive payment instructions via email.');
+        form.reset();
+        delete window[callbackName];
+      };
+
+      const script = document.createElement('script');
+      const url = 'https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec';
+      const params = new URLSearchParams(data);
+      params.append('callback', callbackName);
+      script.src = `${url}?${params.toString()}`;
+      document.body.appendChild(script);
+    };
   </script>
 </body>
 </html>
