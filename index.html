@@ -5,48 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MV Digital Tools</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0d1a26;
-      color: #fff;
+    html, body {
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      overflow-x: hidden;
+      height: 100%;
+      background-color: #0d1a26;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden; /* hide browser scrollbar when iframe is shown */
     }
 
     .container {
-      width: 100%;
       max-width: 500px;
-      padding: 20px;
-    }
-
-    .landing {
+      margin: 0 auto;
+      padding: 30px 20px;
       text-align: center;
+      color: white;
       animation: fadeIn 0.8s ease;
     }
 
-    .landing h2 {
+    h2 {
       font-size: 1.8em;
       margin-bottom: 10px;
     }
 
-    .landing p {
+    p {
       font-size: 1.1em;
       margin-bottom: 20px;
     }
 
     .button {
       padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
       background-color: #e84545;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
       cursor: pointer;
     }
 
@@ -54,15 +48,14 @@
       background-color: #cc3c3c;
     }
 
-    .form-wrapper {
-      display: none;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
-    iframe {
-      width: 100%;
-      min-height: 95vh;
+    .iframe-fullscreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
       border: none;
+      display: none;
     }
 
     @keyframes fadeIn {
@@ -72,27 +65,25 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="landing" id="landingPage">
-      <h2>Welcome to MV Digital Tools</h2>
-      <p>Helping students stay under the radar since 2023 🚀</p>
-      <button class="button" onclick="start()">Let's Get Started</button>
-    </div>
-
-    <div class="form-wrapper" id="formSection">
-      <iframe 
-        src="https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="no-referrer">
-      </iframe>
-    </div>
+  <div class="container" id="landingPage">
+    <h2>Welcome to MV Digital Tools</h2>
+    <p>Helping students stay under the radar since 2023 🚀</p>
+    <button class="button" onclick="showIframe()">Let's Get Started</button>
   </div>
 
+  <iframe
+    id="iframeForm"
+    class="iframe-fullscreen"
+    src="https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="no-referrer">
+  </iframe>
+
   <script>
-    function start() {
+    function showIframe() {
       document.getElementById("landingPage").style.display = "none";
-      document.getElementById("formSection").style.display = "block";
+      document.getElementById("iframeForm").style.display = "block";
     }
   </script>
 </body>
