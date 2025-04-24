@@ -1,94 +1,99 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <base target="_top">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #0d1a26;
-        margin: 0;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MV Digital Tools</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d1a26;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-      @media (max-width: 480px) {
-        body {
-          padding: 10px;
-        }
-        .card {
-          padding: 15px;
-          width: 100%;
-        }
-      }
+    .container {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+    }
 
-      .card {
-        background-color: #ffffff;
-        color: #333;
-        border-radius: 12px;
-        padding: 20px 25px;
-        width: 100%;
-        max-width: 420px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease;
-      }
+    .landing {
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
 
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+    .landing h2 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
 
-      #landingPage {
-        text-align: center;
-        color: white;
-        max-width: 420px;
-        margin: auto;
-        padding: 20px;
-        display: block;
-      }
+    .landing p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
 
-      #startButton {
-        margin-top: 20px;
-        padding: 12px 24px;
-        font-size: 16px;
-        font-weight: bold;
-        background-color: #e84545;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-      }
+    .button {
+      padding: 12px 24px;
+      background-color: #e84545;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-      #startButton:hover {
-        background-color: #cc3c3c;
-      }
+    .button:hover {
+      background-color: #cc3c3c;
+    }
 
-      #formCard {
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="landingPage">
-      <h2>👋 Welcome to MV Digital Tools</h2>
+    .form-wrapper {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    iframe {
+      width: 100%;
+      min-height: 95vh;
+      border: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="landing" id="landingPage">
+      <h2>Welcome to MV Digital Tools</h2>
       <p>Helping students stay under the radar since 2023 🚀</p>
-      <button id="startButton">Let's Get Started</button>
+      <button class="button" onclick="start()">Let's Get Started</button>
     </div>
 
-    <div class="card" id="formCard">
+    <div class="form-wrapper" id="formSection">
       <iframe 
-        src="https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec" 
-        frameborder="0" 
-        style="width:100%; height:1500px; border:none; overflow:hidden;">
+        src="https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer">
       </iframe>
     </div>
+  </div>
 
-    <script>
-      document.getElementById('startButton').onclick = () => {
-        document.getElementById('landingPage').style.display = 'none';
-        document.getElementById('formCard').style.display = 'block';
-      };
-    </script>
-  </body>
+  <script>
+    function start() {
+      document.getElementById("landingPage").style.display = "none";
+      document.getElementById("formSection").style.display = "block";
+    }
+  </script>
+</body>
 </html>
