@@ -7,230 +7,311 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #0d1a26;
+      color: #fff;
       margin: 0;
       padding: 0;
     }
 
-    .centered {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 100vh;
-      flex-direction: column;
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
       padding: 20px;
-      color: white;
+    }
+
+    .centered {
+      text-align: center;
+      padding: 60px 20px 30px;
+      animation: fadeIn 1s ease;
     }
 
     .centered h1 {
+      font-size: 2em;
       margin-bottom: 20px;
     }
 
-    .centered button {
-      padding: 12px 24px;
-      background-color: #e84545;
-      color: white;
+    .centered p {
+      font-size: 1.2em;
+    }
+
+    button, select, input, textarea {
+      font-size: 16px;
+    }
+
+    #startBtn {
+      margin-top: 30px;
+      padding: 14px 24px;
       font-weight: bold;
+      background-color: #e84545;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
+      color: white;
       cursor: pointer;
     }
 
-    .centered button:hover {
+    #startBtn:hover {
       background-color: #cc3c3c;
     }
 
     .card {
-      background-color: white;
+      background: #fff;
       color: #333;
+      padding: 25px;
       border-radius: 12px;
-      padding: 20px;
-      width: 90%;
-      max-width: 420px;
-      margin: 40px auto;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
       display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .card h2 {
+      text-align: center;
+      color: #0d1a26;
     }
 
     label {
-      display: block;
-      margin-top: 15px;
       font-weight: 600;
+      margin-top: 12px;
+      display: block;
     }
 
     input, select, textarea {
       width: 100%;
       padding: 10px;
-      margin-top: 5px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      margin-top: 6px;
+      margin-bottom: 15px;
       box-sizing: border-box;
     }
 
-    .price-summary {
-      margin: 20px 0;
-      padding: 15px;
-      background: #0d1a26;
+    .sticky-price {
+      background-color: #0d1a26;
       color: white;
+      border-radius: 8px;
+      padding: 16px;
       text-align: center;
+      font-size: 18px;
       font-weight: bold;
-      border-radius: 10px;
+      position: sticky;
+      bottom: 0;
+      z-index: 999;
     }
 
-    .price-summary span {
+    .sticky-price span {
+      font-size: 26px;
       display: block;
-      font-size: 22px;
       margin-top: 5px;
     }
 
-    .how-it-works {
-      background-color: #f9f9f9;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 420px;
-      border-radius: 10px;
-      display: none;
-    }
-
-    .how-it-works h3 {
-      margin-top: 0;
-      color: #0d1a26;
-    }
-
-    .how-it-works ol {
-      padding-left: 20px;
-    }
-
-    .info-text {
-      text-align: center;
+    .perk-section {
       font-size: 0.95em;
-      margin-top: 20px;
+      margin: 15px 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-
-<!-- Landing Page -->
-<div class="centered" id="landing">
-  <h1>Welcome to MV Digital Tools</h1>
-  <p>Are you ready to save up to 90% on Subscription services?</p>
-  <button onclick="showHowItWorks()">Yes</button>
-</div>
-
-<!-- How it Works Page -->
-<div class="how-it-works" id="howItWorks">
-  <h3>Here's how it works:</h3>
-  <ol>
-    <li>Fill out the form with your subscription preferences</li>
-    <li>Instant payment instructions will be emailed to you</li>
-    <li>Complete your payment</li>
-    <li>Your subscription will be activated within 1–2 hours</li>
-  </ol>
-  <p class="info-text">Need help? Contact us at 7566658</p>
-  <button onclick="showForm()">Continue</button>
-</div>
-
-<!-- Subscription Form -->
-<div class="card" id="formCard">
-  <h2>Subscription Request</h2>
-  <p>Fill the form to subscribe. Payment instructions will be sent instantly via email.</p>
-
-  <form id="customerForm">
-    <label>Full Name</label>
-    <input type="text" name="name" required>
-
-    <label>Contact Number</label>
-    <input type="tel" name="contact" required>
-
-    <label>Email Address</label>
-    <input type="email" name="email" required>
-
-    <label>Request Type</label>
-    <select name="requestType" required>
-      <option value="new">New Subscription</option>
-      <option value="renew">Renew Existing</option>
-    </select>
-
-    <label>Service</label>
-    <select name="service" id="service" required onchange="updatePrice()">
-      <option value="ChatGPT">ChatGPT Pro</option>
-      <option value="Microsoft 365">Microsoft 365</option>
-      <option value="Canva Pro">Canva Pro</option>
-      <option value="Duolingo">Duolingo</option>
-      <option value="Assignment Check">Assignment Check</option>
-      <option value="Perplexity">Perplexity Pro</option>
-      <option value="Amazon Prime Video">Amazon Prime Video</option>
-      <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
-    </select>
-
-    <label>Duration</label>
-    <select name="duration" id="duration" required onchange="updatePrice()">
-      <option value="1 Month">1 Month</option>
-      <option value="6 Months">6 Months</option>
-      <option value="1 Year">1 Year</option>
-    </select>
-
-    <label>Notes / Reference</label>
-    <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
-
-    <input type="hidden" id="price" name="amount">
-    <div class="price-summary">
-      Total Price
-      <span id="priceDisplay">MVR 0 ($0.00)</span>
+  <div class="container">
+    <div id="landing" class="centered">
+      <h1>Welcome to MV Digital Tools</h1>
+      <p>Are you ready to save up to 90% on Subscription services?</p>
+      <button id="startBtn">Yes</button>
     </div>
 
-    <button type="submit">Submit</button>
-  </form>
-</div>
+    <div id="howItWorks" class="centered" style="display:none;">
+      <h1>Here's how it works</h1>
+      <p>✅ Select your service and duration</p>
+      <p>💳 Get instant payment instructions</p>
+      <p>⚙️ Activation within 1-2 hours</p>
+      <p>📞 Need help? Contact us at 7566658</p>
+      <button id="formBtn">Continue</button>
+    </div>
 
-<script>
-  function showHowItWorks() {
-    document.getElementById("landing").style.display = "none";
-    document.getElementById("howItWorks").style.display = "block";
-  }
+    <div class="card" id="formCard">
+      <h2>Subscription Request</h2>
+      <p style="text-align:center;">Fill the form to subscribe. Payment instructions will be sent instantly.</p>
 
-  function showForm() {
-    document.getElementById("howItWorks").style.display = "none";
-    document.getElementById("formCard").style.display = "block";
-  }
+      <form id="customerForm">
+        <label>Full Name</label>
+        <input type="text" name="name" required>
 
-  const priceMap = {
-    "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
-    "Microsoft 365": { "1 Year": 500 },
-    "Canva Pro": { "1 Year": 150 },
-    "Duolingo": { "1 Year": 150 },
-    "Assignment Check": { "1 Month": 150, "1 Year": 500 },
-    "Perplexity": { "1 Year": 200 },
-    "Amazon Prime Video": { "1 Year": 999 },
-    "Adobe Creative Cloud": { "1 Month": 450 }
-  };
+        <label>Contact Number</label>
+        <input type="tel" name="contact" required>
 
-  function updatePrice() {
-    const service = document.getElementById("service").value;
-    const duration = document.getElementById("duration").value;
-    const price = priceMap[service]?.[duration];
-    const usd = price ? (price / 15.42).toFixed(2) : "0.00";
-    document.getElementById("price").value = `MVR ${price}`;
-    document.getElementById("priceDisplay").textContent = `MVR ${price} ($${usd})`;
-  }
+        <label>Email Address</label>
+        <input type="email" name="email" required>
 
-  document.getElementById("customerForm").onsubmit = function(e) {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(this).entries());
-    fetch("https://script.google.com/macros/s/YOUR_WEBAPP_ID/exec", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
-    }).then(res => res.json()).then(() => {
-      alert("✅ Submitted successfully! Check your email for payment instructions.");
-      this.reset();
+        <label>Request Type</label>
+        <select name="requestType" required>
+          <option value="new">New Subscription</option>
+          <option value="renew">Renew Existing</option>
+        </select>
+
+        <label>Service</label>
+        <select name="service" id="service" required>
+          <option value="ChatGPT">ChatGPT Pro</option>
+          <option value="Microsoft 365">Microsoft 365</option>
+          <option value="Canva Pro">Canva Pro</option>
+          <option value="Duolingo">Duolingo</option>
+          <option value="Assignment Check">Assignment Check</option>
+          <option value="Perplexity">Perplexity Pro</option>
+          <option value="Amazon Prime Video">Amazon Prime Video</option>
+          <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
+        </select>
+
+        <label>Duration</label>
+        <select name="duration" id="duration" required></select>
+
+        <div class="perk-section" id="perkDisplay"></div>
+
+        <label>Notes / Ref</label>
+        <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
+
+        <div class="sticky-price" id="priceDisplay">
+          🛒 Total Price
+          <span>MVR 0 ($0.00)</span>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const priceMap = {
+      "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
+      "Microsoft 365": { "1 Year": 500 },
+      "Canva Pro": { "1 Year": 150 },
+      "Duolingo": { "1 Year": 150 },
+      "Assignment Check": { "1 Assignment": 150, "1 Month Unlimited": 500 },
+      "Perplexity": { "1 Year": 200 },
+      "Amazon Prime Video": { "1 Year": 999 },
+      "Adobe Creative Cloud": { "1 Month": 450 }
+    };
+
+    const durationOptions = {
+      "ChatGPT": ["1 Month", "6 Months", "1 Year"],
+      "Microsoft 365": ["1 Year"],
+      "Canva Pro": ["1 Year"],
+      "Duolingo": ["1 Year"],
+      "Assignment Check": ["1 Assignment", "1 Month Unlimited"],
+      "Perplexity": ["1 Year"],
+      "Amazon Prime Video": ["1 Year"],
+      "Adobe Creative Cloud": ["1 Month"]
+    };
+
+    const perksMap = {
+      "ChatGPT": [
+        "Priority access to GPT-4",
+        "Faster response times",
+        "Improved performance during peak hours"
+      ],
+      "Microsoft 365": [
+        "Access to Word, Excel, PowerPoint",
+        "1TB OneDrive Cloud Storage",
+        "Install on 5 devices"
+      ],
+      "Canva Pro": [
+        "Unlimited premium templates & elements",
+        "Magic Resize, Background Remover",
+        "Brand Kit and content planner"
+      ],
+      "Duolingo": [
+        "Ad-free experience",
+        "Unlimited hearts (mistakes)",
+        "Offline access"
+      ],
+      "Assignment Check": [
+        "AI detection report (Turnitin, GPTZero, etc.)",
+        "No repository saving",
+        "Fast 1–2 hr report"
+      ],
+      "Perplexity": [
+        "Faster and accurate answers",
+        "Cited responses",
+        "No usage limits"
+      ],
+      "Amazon Prime Video": [
+        "Exclusive Prime Originals",
+        "Offline downloads",
+        "Watch on multiple devices"
+      ],
+      "Adobe Creative Cloud": [
+        "Access to Photoshop, Illustrator & more",
+        "100GB Cloud storage",
+        "Creative asset library"
+      ]
+    };
+
+    const serviceEl = document.getElementById("service");
+    const durationEl = document.getElementById("duration");
+    const priceDisplay = document.getElementById("priceDisplay").querySelector("span");
+    const perkDisplay = document.getElementById("perkDisplay");
+
+    function updateDurationOptions() {
+      const service = serviceEl.value;
+      durationEl.innerHTML = "";
+      (durationOptions[service] || []).forEach(opt => {
+        const o = document.createElement("option");
+        o.value = opt;
+        o.textContent = opt;
+        durationEl.appendChild(o);
+      });
+      updatePerks();
       updatePrice();
-    }).catch(() => {
-      alert("❌ Something went wrong. Try again.");
-    });
-  };
-</script>
+    }
 
+    function updatePerks() {
+      const service = serviceEl.value;
+      const perks = perksMap[service] || [];
+      if (perks.length > 0) {
+        perkDisplay.innerHTML = "<strong>What do you get:</strong><ul>" + 
+          perks.map(p => `<li>${p}</li>`).join("") + "</ul>";
+      } else {
+        perkDisplay.innerHTML = "";
+      }
+    }
+
+    function updatePrice() {
+      const service = serviceEl.value;
+      const duration = durationEl.value;
+      const price = priceMap[service]?.[duration];
+      if (price !== undefined) {
+        const usd = (price / 15.42).toFixed(2);
+        priceDisplay.textContent = `MVR ${price} ($${usd})`;
+      } else {
+        priceDisplay.textContent = "Unavailable";
+      }
+    }
+
+    serviceEl.onchange = updateDurationOptions;
+    durationEl.onchange = () => {
+      updatePerks();
+      updatePrice();
+    };
+
+    document.getElementById("startBtn").onclick = () => {
+      document.getElementById("landing").style.display = "none";
+      document.getElementById("howItWorks").style.display = "block";
+    };
+
+    document.getElementById("formBtn").onclick = () => {
+      document.getElementById("howItWorks").style.display = "none";
+      document.getElementById("formCard").style.display = "block";
+    };
+
+    window.onload = updateDurationOptions;
+
+    document.getElementById("customerForm").onsubmit = function (e) {
+      e.preventDefault();
+      alert("✅ Request submitted! Check your email for payment instructions.\n📞 Contact us at 7566658 for any help.");
+      this.reset();
+      updateDurationOptions();
+    };
+  </script>
 </body>
 </html>
