@@ -1,167 +1,192 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d1a26;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    @media (max-width: 480px) {
       body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #0d1a26;
-        margin: 0;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: start;
-        min-height: 100vh;
-        flex-direction: column;
+        padding: 10px;
       }
-
-      @media (max-width: 480px) {
-        body {
-          padding: 10px;
-        }
-        .card {
-          padding: 15px;
-          width: 100%;
-        }
-        input, select, textarea {
-          font-size: 16px;
-        }
-        .price-summary.sticky {
-          position: sticky;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          z-index: 999;
-        }
-      }
-
       .card {
-        background-color: #ffffff;
-        color: #333;
-        border-radius: 12px;
-        padding: 20px 25px;
+        padding: 15px;
         width: 100%;
-        max-width: 420px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease;
-        margin: auto;
-        display: none;
       }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+      input, select, textarea {
+        font-size: 16px;
       }
+    }
 
-      #landingPage {
-        text-align: center;
-        color: #fff;
-        max-width: 420px;
-        margin: auto;
-        padding: 20px;
+    .card {
+      background-color: #ffffff;
+      color: #333;
+      border-radius: 12px;
+      padding: 20px 25px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease;
+      margin: auto;
+      display: none;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.85em;
+      display: block;
+      margin: 10px 0 4px;
+    }
+
+    button {
+      background-color: #e84545;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #cc3c3c;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #landingPage {
+      text-align: center;
+      color: white;
+      max-width: 420px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    #landingPage p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    #startButton {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #e84545;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #startButton:hover {
+      background-color: #cc3c3c;
+    }
+  </style>
+</head>
+<body>
+  <div id="landingPage">
+    <h2>👋 Welcome to MV Digital Tools</h2>
+    <p>Are you ready to save up to 90% on Subscription services? 🚀</p>
+    <button id="startButton">Yes, show me how</button>
+  </div>
+
+  <div class="card" id="formCard">
+    <h2>📝 Subscription Request</h2>
+    <p>Fill the form to subscribe. You'll receive payment instructions via email.</p>
+
+    <form id="customerForm">
+      <label>👤 Full Name</label>
+      <input type="text" name="name" required>
+
+      <label>📞 Contact Number</label>
+      <input type="tel" name="contact" required>
+
+      <label>📧 Email Address</label>
+      <input type="email" name="email" required>
+
+      <label>🛠️ Request Type</label>
+      <select name="requestType" required>
+        <option value="new">New Subscription</option>
+        <option value="renew">Renew Existing</option>
+      </select>
+
+      <label>🧩 Service</label>
+      <select name="service" required>
+        <option value="ChatGPT">ChatGPT Pro</option>
+        <option value="Microsoft 365">Microsoft 365</option>
+        <option value="Canva Pro">Canva Pro</option>
+        <option value="Duolingo">Duolingo</option>
+        <option value="Assignment Check">Assignment Check</option>
+        <option value="Perplexity">Perplexity Pro</option>
+        <option value="Amazon Prime Video">Amazon Prime Video</option>
+        <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
+      </select>
+
+      <label>⏳ Duration</label>
+      <select name="duration" required>
+        <option>1 Month</option>
+        <option>6 Months</option>
+        <option>1 Year</option>
+      </select>
+
+      <label>🗒️ Notes / Ref</label>
+      <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('startButton').onclick = () => {
+      document.getElementById('landingPage').style.display = 'none';
+      document.getElementById('formCard').style.display = 'block';
+    };
+
+    document.getElementById('customerForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_ID/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        alert('✅ Request submitted successfully!');
+        e.target.reset();
+      } catch (err) {
+        alert('❌ Something went wrong. Please try again later.');
       }
-
-      #landingPage p {
-        font-size: 1.2em;
-        margin-top: 10px;
-      }
-
-      #startButton {
-        margin-top: 20px;
-        padding: 12px 24px;
-        font-size: 18px;
-        font-weight: bold;
-        background-color: #e84545;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-
-      #startButton:hover {
-        background-color: #cc3c3c;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="landingPage">
-      <h2>👋 Welcome to MV Digital Tools</h2>
-      <p>Are you ready to save up to 90% on Subscription services? 🚀</p>
-      <button id="startButton">Yes</button>
-    </div>
-
-    <div class="card" id="formCard">
-      <!-- Full embedded form HTML should be placed here (not an iframe) -->
-      <h2>📝 Subscription Request</h2>
-      <p>Fill the form to subscribe. You'll receive payment instructions via email.</p>
-
-      <form id="customerForm">
-        <label>👤 Full Name</label>
-        <input type="text" name="name" required>
-
-        <label>📞 Contact Number</label>
-        <input type="tel" name="contact" required>
-
-        <label>📧 Email Address</label>
-        <input type="email" name="email" required>
-
-        <label>🛠️ Request Type</label>
-        <select name="requestType" required>
-          <option value="new">New Subscription</option>
-          <option value="renew">Renew Existing</option>
-        </select>
-
-        <label>🧩 Service</label>
-        <select name="service" id="service" required>
-          <option value="ChatGPT">ChatGPT Pro</option>
-          <option value="Microsoft 365">Microsoft 365</option>
-          <option value="Canva Pro">Canva Pro</option>
-          <option value="Duolingo">Duolingo</option>
-          <option value="Assignment Check">Assignment Check</option>
-          <option value="Perplexity">Perplexity Pro</option>
-          <option value="Amazon Prime Video">Amazon Prime Video</option>
-          <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
-        </select>
-
-        <label>⏳ Duration</label>
-        <select name="duration" required>
-          <option>1 Month</option>
-          <option>6 Months</option>
-          <option>1 Year</option>
-        </select>
-
-        <label>🗒️ Notes / Ref</label>
-        <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
-
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-
-    <script>
-      document.getElementById('startButton').onclick = () => {
-        document.getElementById('landingPage').style.display = 'none';
-        document.getElementById('formCard').style.display = 'block';
-      };
-
-      document.getElementById('customerForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-
-        try {
-          const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_ID/exec', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-          const result = await res.json();
-          alert('✅ Request submitted successfully!');
-          e.target.reset();
-        } catch (err) {
-          alert('❌ Something went wrong. Please try again later.');
-        }
-      };
-    </script>
-  </body>
+    };
+  </script>
+</body>
 </html>
