@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <base target="_top">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MV Digital Tools</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -25,31 +26,27 @@
       animation: fadeIn 1s ease;
     }
 
-    .centered h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
     }
 
-    .centered p {
-      font-size: 1.2em;
+    p {
+      font-size: 1.1em;
     }
 
-    button, select, input, textarea {
-      font-size: 16px;
-    }
-
-    #startBtn, #formBtn, #customerForm button {
-      margin-top: 30px;
-      padding: 14px 24px;
-      font-weight: bold;
+    button {
+      padding: 12px 24px;
       background-color: #e84545;
+      color: #fff;
       border: none;
       border-radius: 8px;
-      color: white;
+      font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
     }
 
-    #startBtn:hover, #formBtn:hover, #customerForm button:hover {
+    button:hover {
       background-color: #cc3c3c;
     }
 
@@ -58,19 +55,14 @@
       color: #333;
       padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      margin-bottom: 30px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      margin-top: 30px;
       display: none;
       animation: fadeIn 0.5s ease-in-out;
     }
 
-    .card h2 {
-      text-align: center;
-      color: #0d1a26;
-    }
-
     label {
-      font-weight: 600;
+      font-weight: bold;
       margin-top: 12px;
       display: block;
     }
@@ -83,30 +75,28 @@
       margin-top: 6px;
       margin-bottom: 15px;
       box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    .perk-section {
+      font-size: 0.95em;
+      margin: 10px 0 20px;
     }
 
     .sticky-price {
       background-color: #0d1a26;
       color: white;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 16px;
       text-align: center;
-      font-size: 18px;
       font-weight: bold;
-      position: sticky;
-      bottom: 0;
-      z-index: 999;
+      font-size: 18px;
     }
 
     .sticky-price span {
-      font-size: 26px;
       display: block;
+      font-size: 26px;
       margin-top: 5px;
-    }
-
-    .perk-section {
-      font-size: 0.95em;
-      margin: 15px 0;
     }
 
     @keyframes fadeIn {
@@ -120,30 +110,27 @@
     <div id="landing" class="centered">
       <h1>Welcome to MV Digital Tools</h1>
       <p>Are you ready to save up to 90% on Subscription services?</p>
-      <button id="startBtn">Yes, show me how</button>
+      <button onclick="showHowItWorks()">Yes, show me how</button>
     </div>
 
     <div id="howItWorks" class="centered" style="display:none;">
       <h1>Here's how it works</h1>
-      <p>✅ Select your service and duration</p>
-      <p>💳 Get instant payment instructions</p>
-      <p>⚙️ Activation within 1–2 hours</p>
-      <p>📞 Need help? Contact us at 7566658</p>
-      <button id="formBtn">Continue</button>
+      <p>✅ Fill the form — <b>2 minutes</b></p>
+      <p>📧 Instant payment instructions via email</p>
+      <p>✅ Activation within <b>1–2 hours</b> (same day)</p>
+      <p>📞 Need help? <b>Call 7566658</b></p>
+      <button onclick="showForm()">Continue</button>
     </div>
 
-    <div class="card" id="formCard">
-      <h2>Subscription Request</h2>
+    <div id="formCard" class="card">
+      <h2>📝 Subscription Request</h2>
       <p style="text-align:center;">Fill the form to subscribe. Payment instructions will be sent instantly.</p>
       <form id="customerForm">
         <label>Full Name</label>
-        <input type="text" name="name" required>
-
-        <label>Contact Number</label>
-        <input type="tel" name="contact" required>
+        <input type="text" name="name" required />
 
         <label>Email Address</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" required />
 
         <label>Request Type</label>
         <select name="requestType" required>
@@ -155,14 +142,18 @@
         <select name="service" id="service" required>
           <option value="ChatGPT">ChatGPT Pro</option>
           <option value="Microsoft 365">Microsoft 365</option>
+          <option value="Canva Pro">Canva Pro</option>
+          <option value="Duolingo">Duolingo</option>
+          <option value="Assignment Check">Assignment Check</option>
+          <option value="Perplexity">Perplexity Pro</option>
+          <option value="Amazon Prime Video">Amazon Prime Video</option>
+          <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
         </select>
 
         <label>Duration</label>
-        <select name="duration" id="duration" required>
-          <option value="1 Month">1 Month</option>
-        </select>
+        <select name="duration" id="duration" required></select>
 
-        <div class="perk-section" id="perkDisplay">What do you get:</div>
+        <div class="perk-section" id="perkDisplay"></div>
 
         <label>Notes / Ref</label>
         <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
@@ -178,14 +169,152 @@
   </div>
 
   <script>
-    document.getElementById("startBtn").onclick = () => {
-      document.getElementById("landing").style.display = "none";
-      document.getElementById("howItWorks").style.display = "block";
+    function showHowItWorks() {
+      document.getElementById('landing').style.display = 'none';
+      document.getElementById('howItWorks').style.display = 'block';
+    }
+
+    function showForm() {
+      document.getElementById('howItWorks').style.display = 'none';
+      document.getElementById('formCard').style.display = 'block';
+    }
+
+    const priceMap = {
+      "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
+      "Microsoft 365": { "1 Year": 500 },
+      "Canva Pro": { "1 Year": 150 },
+      "Duolingo": { "1 Year": 150 },
+      "Assignment Check": { "1 Assignment": 150, "1 Month Unlimited": 500 },
+      "Perplexity": { "1 Year": 200 },
+      "Amazon Prime Video": { "1 Year": 999 },
+      "Adobe Creative Cloud": { "1 Month": 450 }
     };
 
-    document.getElementById("formBtn").onclick = () => {
-      document.getElementById("howItWorks").style.display = "none";
-      document.getElementById("formCard").style.display = "block";
+    const durationOptions = {
+      "ChatGPT": ["1 Month", "6 Months", "1 Year"],
+      "Microsoft 365": ["1 Year"],
+      "Canva Pro": ["1 Year"],
+      "Duolingo": ["1 Year"],
+      "Assignment Check": ["1 Assignment", "1 Month Unlimited"],
+      "Perplexity": ["1 Year"],
+      "Amazon Prime Video": ["1 Year"],
+      "Adobe Creative Cloud": ["1 Month"]
+    };
+
+    const perksMap = {
+      "ChatGPT": [
+        "Priority access to GPT-4",
+        "Faster response times",
+        "Improved performance during peak hours"
+      ],
+      "Microsoft 365": [
+        "Access to Word, Excel, PowerPoint",
+        "1TB OneDrive Cloud Storage",
+        "Install on 5 devices"
+      ],
+      "Canva Pro": [
+        "Unlimited premium templates & elements",
+        "Magic Resize, Background Remover",
+        "Brand Kit and content planner"
+      ],
+      "Duolingo": [
+        "Ad-free experience",
+        "Unlimited hearts (mistakes)",
+        "Offline access"
+      ],
+      "Assignment Check": [
+        "AI detection report (Turnitin, GPTZero, etc.)",
+        "No repository saving",
+        "Fast 1–2 hr report"
+      ],
+      "Perplexity": [
+        "Faster and accurate answers",
+        "Cited responses",
+        "No usage limits"
+      ],
+      "Amazon Prime Video": [
+        "Exclusive Prime Originals",
+        "Offline downloads",
+        "Watch on multiple devices"
+      ],
+      "Adobe Creative Cloud": [
+        "Access to Photoshop, Illustrator & more",
+        "100GB Cloud storage",
+        "Creative asset library"
+      ]
+    };
+
+    const serviceEl = document.getElementById("service");
+    const durationEl = document.getElementById("duration");
+    const priceDisplay = document.getElementById("priceDisplay").querySelector("span");
+    const perkDisplay = document.getElementById("perkDisplay");
+
+    function updateDurationOptions() {
+      const service = serviceEl.value;
+      durationEl.innerHTML = "";
+      (durationOptions[service] || []).forEach(opt => {
+        const o = document.createElement("option");
+        o.value = opt;
+        o.textContent = opt;
+        durationEl.appendChild(o);
+      });
+      updatePerks();
+      updatePrice();
+    }
+
+    function updatePerks() {
+      const service = serviceEl.value;
+      const perks = perksMap[service] || [];
+      if (perks.length > 0) {
+        perkDisplay.innerHTML = "<strong>What do you get:</strong><ul>" + 
+          perks.map(p => `<li>${p}</li>`).join("") + "</ul>";
+      } else {
+        perkDisplay.innerHTML = "";
+      }
+    }
+
+    function updatePrice() {
+      const service = serviceEl.value;
+      const duration = durationEl.value;
+      const price = priceMap[service]?.[duration];
+      if (price !== undefined) {
+        const usd = (price / 15.42).toFixed(2);
+        priceDisplay.textContent = `MVR ${price} ($${usd})`;
+      } else {
+        priceDisplay.textContent = "Unavailable";
+      }
+    }
+
+    serviceEl.onchange = updateDurationOptions;
+    durationEl.onchange = () => {
+      updatePerks();
+      updatePrice();
+    };
+
+    window.onload = updateDurationOptions;
+
+    document.getElementById("customerForm").onsubmit = async function(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this).entries());
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (result.status === "success") {
+          alert("✅ Request submitted! Please check your email for payment instructions.");
+          this.reset();
+          updateDurationOptions();
+        } else {
+          alert("❌ Something went wrong. Try again later.");
+        }
+      } catch (err) {
+        alert("❌ Error connecting to server. Please check your network or try again.");
+      }
     };
   </script>
 </body>
