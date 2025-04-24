@@ -1,163 +1,159 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <base target="_top">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #0d1a26;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+    }
+
+    .centered {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .card {
-      background-color: #ffffff;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 420px;
-      width: 100%;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 {
-      margin-top: 0;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .center {
       text-align: center;
+      min-height: 100vh;
+      flex-direction: column;
+      padding: 20px;
+      color: white;
     }
 
-    .btn {
-      background: #e84545;
+    .centered h1 {
+      margin-bottom: 20px;
+    }
+
+    .centered button {
+      padding: 12px 24px;
+      background-color: #e84545;
       color: white;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      border-radius: 8px;
-      font-size: 16px;
       font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
       cursor: pointer;
     }
 
-    .btn:hover {
-      background: #cc3c3c;
+    .centered button:hover {
+      background-color: #cc3c3c;
+    }
+
+    .card {
+      background-color: white;
+      color: #333;
+      border-radius: 12px;
+      padding: 20px;
+      width: 90%;
+      max-width: 420px;
+      margin: 40px auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      display: none;
     }
 
     label {
-      font-weight: 600;
-      font-size: 0.85em;
       display: block;
-      margin: 10px 0 4px;
+      margin-top: 15px;
+      font-weight: 600;
     }
 
     input, select, textarea {
       width: 100%;
-      padding: 10px 12px;
-      font-size: 14px;
-      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 5px;
       border-radius: 8px;
-      margin-bottom: 12px;
+      border: 1px solid #ccc;
       box-sizing: border-box;
     }
 
     .price-summary {
-      background-color: #0d1a26;
+      margin: 20px 0;
+      padding: 15px;
+      background: #0d1a26;
       color: white;
-      border-radius: 10px;
-      padding: 16px;
       text-align: center;
       font-weight: bold;
-      font-size: 18px;
-      margin: 16px 0;
+      border-radius: 10px;
     }
 
     .price-summary span {
       display: block;
-      font-size: 24px;
+      font-size: 22px;
       margin-top: 5px;
     }
 
-    .avatar-preview {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      margin-bottom: 10px;
+    .how-it-works {
+      background-color: #f9f9f9;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 420px;
+      border-radius: 10px;
+      display: none;
     }
 
-    .avatar-preview img {
-      height: 40px;
-      width: auto;
-      border-radius: 8px;
-    }
-
-    ul {
-      padding-left: 20px;
+    .how-it-works h3 {
       margin-top: 0;
-      margin-bottom: 20px;
+      color: #0d1a26;
+    }
+
+    .how-it-works ol {
+      padding-left: 20px;
+    }
+
+    .info-text {
+      text-align: center;
+      font-size: 0.95em;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
-<!-- Welcome Screen -->
-<div class="card" id="welcomeCard">
-  <h2 class="center">Welcome to MV Digital Tools</h2>
-  <p class="center">Are you ready to save up to 90% on subscription services?</p>
-  <button class="btn" onclick="goToHowItWorks()">Yes, show me how</button>
+<!-- Landing Page -->
+<div class="centered" id="landing">
+  <h1>Welcome to MV Digital Tools</h1>
+  <p>Are you ready to save up to 90% on Subscription services?</p>
+  <button onclick="showHowItWorks()">Yes</button>
 </div>
 
-<!-- How it Works Screen -->
-<div class="card hidden" id="howItWorksCard">
-  <h3>📋 Here's how it works:</h3>
-  <ul>
-    <li>📝 Fill out the form — <strong>2 minutes</strong></li>
-    <li>📧 Instant payment instructions via email</li>
-    <li>✅ Activation within <strong>1–2 hours</strong> (same day)</li>
-    <li>📞 Need help? <span style="color: red;">Call 7566658</span></li>
-  </ul>
-  <button class="btn" onclick="goToForm()">Yes, show me</button>
+<!-- How it Works Page -->
+<div class="how-it-works" id="howItWorks">
+  <h3>Here's how it works:</h3>
+  <ol>
+    <li>Fill out the form with your subscription preferences</li>
+    <li>Instant payment instructions will be emailed to you</li>
+    <li>Complete your payment</li>
+    <li>Your subscription will be activated within 1–2 hours</li>
+  </ol>
+  <p class="info-text">Need help? Contact us at 7566658</p>
+  <button onclick="showForm()">Continue</button>
 </div>
 
 <!-- Subscription Form -->
-<div class="card hidden" id="formCard">
-  <h2>📝 Subscription Request</h2>
-  <p>Fill the form to subscribe. You'll receive payment instructions via email.</p>
+<div class="card" id="formCard">
+  <h2>Subscription Request</h2>
+  <p>Fill the form to subscribe. Payment instructions will be sent instantly via email.</p>
 
   <form id="customerForm">
-    <label>👤 Full Name</label>
+    <label>Full Name</label>
     <input type="text" name="name" required>
 
-    <label>📞 Contact Number</label>
+    <label>Contact Number</label>
     <input type="tel" name="contact" required>
 
-    <label>📧 Email Address</label>
+    <label>Email Address</label>
     <input type="email" name="email" required>
 
-    <label>🛠️ Request Type</label>
+    <label>Request Type</label>
     <select name="requestType" required>
       <option value="new">New Subscription</option>
       <option value="renew">Renew Existing</option>
     </select>
 
-    <div class="avatar-preview" id="avatarPreview"></div>
-
-    <label>🧩 Service</label>
-    <select name="service" id="service" required>
+    <label>Service</label>
+    <select name="service" id="service" required onchange="updatePrice()">
       <option value="ChatGPT">ChatGPT Pro</option>
       <option value="Microsoft 365">Microsoft 365</option>
       <option value="Canva Pro">Canva Pro</option>
@@ -168,120 +164,71 @@
       <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
     </select>
 
-    <label>⏳ Duration</label>
-    <select name="duration" id="duration" required>
-      <option>1 Month</option>
-      <option>6 Months</option>
-      <option>1 Year</option>
+    <label>Duration</label>
+    <select name="duration" id="duration" required onchange="updatePrice()">
+      <option value="1 Month">1 Month</option>
+      <option value="6 Months">6 Months</option>
+      <option value="1 Year">1 Year</option>
     </select>
 
-    <div class="price-summary" id="priceDisplay">
-      🛒 Total Price
-      <span>MVR 0 ($0.00)</span>
-    </div>
-
-    <label>🔥 What do you get:</label>
-    <ul id="perkList"></ul>
-
-    <label>🗒️ Notes / Ref</label>
+    <label>Notes / Reference</label>
     <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
 
-    <button class="btn" type="submit">Submit</button>
+    <input type="hidden" id="price" name="amount">
+    <div class="price-summary">
+      Total Price
+      <span id="priceDisplay">MVR 0 ($0.00)</span>
+    </div>
+
+    <button type="submit">Submit</button>
   </form>
 </div>
 
 <script>
-  const avatars = {
-    "ChatGPT": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-    "Microsoft 365": "https://cdn.iconscout.com/icon/free/png-256/microsoft-28-761688.png",
-    "Canva Pro": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Canva_logo_2021.svg",
-    "Duolingo": "https://www.monotype.com/sites/default/files/2022-12/duolingo1_108.png",
-    "Assignment Check": "https://cdn-icons-png.flaticon.com/512/4213/4213415.png",
-    "Perplexity": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Perplexity_AI_logo.svg/800px-Perplexity_AI_logo.svg.png",
-    "Amazon Prime Video": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png",
-    "Adobe Creative Cloud": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Adobe_Creative_Cloud_rainbow_icon.svg/2101px-Adobe_Creative_Cloud_rainbow_icon.svg.png"
-  };
+  function showHowItWorks() {
+    document.getElementById("landing").style.display = "none";
+    document.getElementById("howItWorks").style.display = "block";
+  }
 
-  const priceDisplay = document.getElementById("priceDisplay").querySelector("span");
-  const perkList = document.getElementById("perkList");
-  const serviceEl = document.getElementById("service");
-  const durationEl = document.getElementById("duration");
-  const avatarPreview = document.getElementById("avatarPreview");
+  function showForm() {
+    document.getElementById("howItWorks").style.display = "none";
+    document.getElementById("formCard").style.display = "block";
+  }
 
-  const perks = {
-    "ChatGPT": ["Priority access to GPT-4", "Faster response times", "Improved performance during peak hours"],
-    "Microsoft 365": ["Full access to Word, Excel, PowerPoint", "1TB OneDrive cloud storage", "Outlook email & calendar", "Install on up to 5 devices"],
-    "Canva Pro": ["Unlimited premium templates & elements", "Magic Resize and Background Remover", "Brand Kit and content planner"],
-    "Duolingo": ["No ads", "Unlimited hearts", "Mastery quizzes", "Offline access"],
-    "Assignment Check": ["AI detection report (Turnitin, etc)", "Basic & Advanced bypass options", "Unlimited corrections with Plus plan"],
-    "Perplexity": ["Expanded answer formatting", "Citations in context", "Unlimited usage"],
-    "Amazon Prime Video": ["Prime Originals", "Movies & TV", "Multiple devices", "Offline viewing"],
-    "Adobe Creative Cloud": ["Photoshop, Illustrator, Premiere Pro", "Fonts & Stock Assets", "Cross-device sync"]
-  };
-
-  const prices = {
-    "ChatGPT": 100,
-    "Microsoft 365": 500,
-    "Canva Pro": 150,
-    "Duolingo": 150,
-    "Assignment Check": 150,
-    "Perplexity": 200,
-    "Amazon Prime Video": 999,
-    "Adobe Creative Cloud": 450
+  const priceMap = {
+    "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
+    "Microsoft 365": { "1 Year": 500 },
+    "Canva Pro": { "1 Year": 150 },
+    "Duolingo": { "1 Year": 150 },
+    "Assignment Check": { "1 Month": 150, "1 Year": 500 },
+    "Perplexity": { "1 Year": 200 },
+    "Amazon Prime Video": { "1 Year": 999 },
+    "Adobe Creative Cloud": { "1 Month": 450 }
   };
 
   function updatePrice() {
-    const service = serviceEl.value;
-    const price = prices[service];
-    const usd = (price / 15.42).toFixed(2);
-    priceDisplay.textContent = `MVR ${price} ($${usd})`;
+    const service = document.getElementById("service").value;
+    const duration = document.getElementById("duration").value;
+    const price = priceMap[service]?.[duration];
+    const usd = price ? (price / 15.42).toFixed(2) : "0.00";
+    document.getElementById("price").value = `MVR ${price}`;
+    document.getElementById("priceDisplay").textContent = `MVR ${price} ($${usd})`;
   }
 
-  function updatePerks() {
-    const selected = serviceEl.value;
-    perkList.innerHTML = "";
-    (perks[selected] || []).forEach(p => {
-      const li = document.createElement("li");
-      li.textContent = p;
-      perkList.appendChild(li);
-    });
-  }
-
-  function updateAvatar() {
-    const selected = serviceEl.value;
-    const url = avatars[selected];
-    avatarPreview.innerHTML = url ? `<img src="${url}" alt="${selected} logo">` : "";
-  }
-
-  serviceEl.onchange = () => {
-    updatePrice();
-    updatePerks();
-    updateAvatar();
-  };
-
-  window.onload = () => {
-    updatePrice();
-    updatePerks();
-    updateAvatar();
-  };
-
-  function goToHowItWorks() {
-    document.getElementById("welcomeCard").classList.add("hidden");
-    document.getElementById("howItWorksCard").classList.remove("hidden");
-  }
-
-  function goToForm() {
-    document.getElementById("howItWorksCard").classList.add("hidden");
-    document.getElementById("formCard").classList.remove("hidden");
-  }
-
-  document.getElementById("customerForm").onsubmit = async function(e) {
+  document.getElementById("customerForm").onsubmit = function(e) {
     e.preventDefault();
-    alert("✅ Your request has been submitted!\n💳 Please check your email for payment instructions.");
-    this.reset();
-    updatePrice();
-    updatePerks();
-    updateAvatar();
+    const data = Object.fromEntries(new FormData(this).entries());
+    fetch("https://script.google.com/macros/s/YOUR_WEBAPP_ID/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" }
+    }).then(res => res.json()).then(() => {
+      alert("✅ Submitted successfully! Check your email for payment instructions.");
+      this.reset();
+      updatePrice();
+    }).catch(() => {
+      alert("❌ Something went wrong. Try again.");
+    });
   };
 </script>
 
