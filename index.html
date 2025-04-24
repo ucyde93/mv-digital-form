@@ -1,9 +1,9 @@
-<!-- Final HTML - Generated on 2025-04-24 -->
 <!DOCTYPE html>
 <html>
 <head>
   <base target="_top">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MV Digital Tools - Subscription</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -22,6 +22,29 @@
       padding: 60px 20px 30px;
       animation: fadeIn 1s ease;
     }
+    .centered h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    .centered p {
+      font-size: 1.2em;
+    }
+    button, select, input, textarea {
+      font-size: 16px;
+    }
+    .red-btn {
+      margin-top: 30px;
+      padding: 14px 24px;
+      font-weight: bold;
+      background-color: #e84545;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+    }
+    .red-btn:hover {
+      background-color: #cc3c3c;
+    }
     .card {
       background: #fff;
       color: #333;
@@ -32,35 +55,23 @@
       display: none;
       animation: fadeIn 0.5s ease-in-out;
     }
-    h1, h2 { color: #0d1a26; text-align: center; }
-    button {
-      font-size: 16px;
-      padding: 14px 24px;
-      font-weight: bold;
-      background-color: #e84545;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
+    .card h2 {
+      text-align: center;
+      color: #0d1a26;
     }
-    button:hover {
-      background-color: #cc3c3c;
+    label {
+      font-weight: 600;
+      margin-top: 12px;
+      display: block;
     }
     input, select, textarea {
       width: 100%;
       padding: 10px;
-      font-size: 16px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      margin: 8px 0 16px;
+      margin-top: 6px;
+      margin-bottom: 15px;
       box-sizing: border-box;
-    }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-top: 12px;
     }
     .sticky-price {
       background-color: #0d1a26;
@@ -91,43 +102,34 @@
 </head>
 <body>
   <div class="container">
-    <!-- Step 1: Welcome -->
     <div id="landing" class="centered">
       <h1>Welcome to MV Digital Tools</h1>
-      <p>Are you ready to save up to 90% on subscription services?</p>
-      <button id="startBtn">Yes, show me how</button>
+      <p>Are you ready to save up to 90% on Subscription services?</p>
+      <button class="red-btn" id="startBtn">Yes, show me how</button>
     </div>
-
-    <!-- Step 2: How It Works -->
     <div id="howItWorks" class="centered" style="display:none;">
-      <h1>📋 Here's how it works:</h1>
-      <p>✅ Fill out the form — <strong>2 minutes</strong></p>
-      <p>📩 Instant payment instructions via email</p>
-      <p>⚙️ Activation within <strong>1–2 hours</strong> (same day)</p>
-      <p>📞 Need help? <strong>Call 7566658</strong></p>
-      <button id="formBtn">Continue</button>
+      <h1>Here's how it works</h1>
+      <p>✅ Select your service and duration</p>
+      <p>💳 Get instant payment instructions</p>
+      <p>⚙️ Activation within 1–2 hours</p>
+      <p>📞 Need help? Contact us at 7566658</p>
+      <button class="red-btn" id="formBtn">Continue</button>
     </div>
-
-    <!-- Step 3: Form -->
     <div class="card" id="formCard">
-      <h2>📝 Subscription Request</h2>
+      <h2>Subscription Request</h2>
       <p style="text-align:center;">Fill the form to subscribe. Payment instructions will be sent instantly.</p>
       <form id="customerForm">
         <label>Full Name</label>
         <input type="text" name="name" required>
-
         <label>Contact Number</label>
         <input type="tel" name="contact" required>
-
         <label>Email Address</label>
         <input type="email" name="email" required>
-
         <label>Request Type</label>
         <select name="requestType" required>
           <option value="new">New Subscription</option>
           <option value="renew">Renew Existing</option>
         </select>
-
         <label>Service</label>
         <select name="service" id="service" required>
           <option value="ChatGPT">ChatGPT Pro</option>
@@ -139,28 +141,17 @@
           <option value="Amazon Prime Video">Amazon Prime Video</option>
           <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
         </select>
-
         <label>Duration</label>
         <select name="duration" id="duration" required></select>
-
         <div class="perk-section" id="perkDisplay"></div>
-
         <label>Notes / Ref</label>
         <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
-
-        <div class="sticky-price" id="priceDisplay">
-          🛒 Total Price
-          <span>MVR 0 ($0.00)</span>
-        </div>
-
-        <button type="submit">Submit</button>
+        <div class="sticky-price" id="priceDisplay">🛒 Total Price <span>MVR 0 ($0.00)</span></div>
+        <button type="submit" class="red-btn">Submit</button>
       </form>
     </div>
   </div>
-
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec";
-
     const priceMap = {
       "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
       "Microsoft 365": { "1 Year": 500 },
@@ -171,7 +162,6 @@
       "Amazon Prime Video": { "1 Year": 999 },
       "Adobe Creative Cloud": { "1 Month": 450 }
     };
-
     const durationOptions = {
       "ChatGPT": ["1 Month", "6 Months", "1 Year"],
       "Microsoft 365": ["1 Year"],
@@ -182,7 +172,6 @@
       "Amazon Prime Video": ["1 Year"],
       "Adobe Creative Cloud": ["1 Month"]
     };
-
     const perksMap = {
       "ChatGPT": [
         "Priority access to GPT-4",
@@ -225,12 +214,10 @@
         "Creative asset library"
       ]
     };
-
     const serviceEl = document.getElementById("service");
     const durationEl = document.getElementById("duration");
     const priceDisplay = document.getElementById("priceDisplay").querySelector("span");
     const perkDisplay = document.getElementById("perkDisplay");
-
     function updateDurationOptions() {
       const service = serviceEl.value;
       durationEl.innerHTML = "";
@@ -243,7 +230,6 @@
       updatePerks();
       updatePrice();
     }
-
     function updatePerks() {
       const service = serviceEl.value;
       const perks = perksMap[service] || [];
@@ -254,7 +240,6 @@
         perkDisplay.innerHTML = "";
       }
     }
-
     function updatePrice() {
       const service = serviceEl.value;
       const duration = durationEl.value;
@@ -266,40 +251,35 @@
         priceDisplay.textContent = "Unavailable";
       }
     }
-
     serviceEl.onchange = updateDurationOptions;
     durationEl.onchange = () => {
       updatePerks();
       updatePrice();
     };
-
     document.getElementById("startBtn").onclick = () => {
       document.getElementById("landing").style.display = "none";
       document.getElementById("howItWorks").style.display = "block";
     };
-
     document.getElementById("formBtn").onclick = () => {
       document.getElementById("howItWorks").style.display = "none";
       document.getElementById("formCard").style.display = "block";
     };
-
     window.onload = updateDurationOptions;
-
-    document.getElementById("customerForm").onsubmit = async function(e) {
+    document.getElementById("customerForm").onsubmit = function (e) {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(this).entries());
-      try {
-        await fetch(scriptURL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-        alert("✅ Request submitted! Check your email for payment instructions.\n📞 Contact us at 7566658.");
-        this.reset();
+      fetch("https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }).then(res => res.json()).then(result => {
+        alert("✅ Request submitted! Check your email for payment instructions.
+📞 Contact us at 7566658");
+        e.target.reset();
         updateDurationOptions();
-      } catch (err) {
-        alert("❌ Something went wrong. Try again later.");
-      }
+      }).catch(err => {
+        alert("❌ Something went wrong. Please try again.");
+      });
     };
   </script>
 </body>
