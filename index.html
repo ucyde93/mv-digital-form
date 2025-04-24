@@ -138,9 +138,6 @@
 
         <div class="perk-section" id="perkDisplay"></div>
 
-        <label>Amount Paid</label>
-        <input type="text" name="amount" id="price" required>
-
         <label>Notes / Ref</label>
         <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
 
@@ -200,7 +197,6 @@
     const serviceEl = document.getElementById("service");
     const durationEl = document.getElementById("duration");
     const priceDisplay = document.getElementById("priceDisplay").querySelector("span");
-    const priceInput = document.getElementById("price");
     const perkDisplay = document.getElementById("perkDisplay");
 
     function updateDurationOptions() {
@@ -234,10 +230,9 @@
       if (price !== undefined) {
         const usd = (price / 15.42).toFixed(2);
         priceDisplay.textContent = `MVR ${price} ($${usd})`;
-        priceInput.value = price;
+  
       } else {
         priceDisplay.textContent = "Unavailable";
-        priceInput.value = "";
       }
     }
 
@@ -250,31 +245,28 @@
     window.onload = updateDurationOptions;
 
     document.getElementById("customerForm").onsubmit = function(e) {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(this).entries());
-      const callback = "jsonpCallback_" + Date.now();
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(this).entries());
 
-      window[callback] = function(response) {
-        if (response.status === "success") {
-          alert("✅ Request submitted! Please check your email for payment instructions.");
-          document.getElementById("customerForm").reset();
-          updateDurationOptions();
-        } else {
-          alert("❌ Something went wrong. Try again later.");
-        }
-        document.body.removeChild(script);
-        delete window[callback];
-      };
-
-      const script = document.createElement('script');
-      const url = "https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec";
-      const params = new URLSearchParams(data);
-      params.append('callback', callback);
-      script.src = `${url}?${params.toString()}`;
-      script.onerror = () => {
-        alert("❌ Error connecting to server. Please check your network or try again.");
-        delete window[callback];
-      };
+  fetch("https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.json())
+  .then(response => {
+    if (response.status === "success") {
+      alert("✅ Request submitted! Check your email.");
+      this.reset();
+    } else {
+      alert("❌ Submission failed. Try again later.");
+    }
+  })
+  .catch(err => {
+    alert("❌ Network error. Please try again.");
+    console.error(err);
+  });
+});
       document.body.appendChild(script);
     };
   </script>
