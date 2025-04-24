@@ -20,21 +20,7 @@
     .centered {
       text-align: center;
       padding: 60px 20px 30px;
-      animation: fadeIn 1s ease;
     }
-    h1 { font-size: 1.8em; margin-bottom: 10px; }
-    p { font-size: 1.1em; }
-    button {
-      padding: 12px 24px;
-      background-color: #e84545;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover { background-color: #cc3c3c; }
     .card {
       background: #fff;
       color: #333;
@@ -42,8 +28,6 @@
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       margin-top: 30px;
-      display: none;
-      animation: fadeIn 0.5s ease-in-out;
     }
     label {
       font-weight: bold;
@@ -57,110 +41,75 @@
       border: 1px solid #ccc;
       margin-top: 6px;
       margin-bottom: 15px;
-      box-sizing: border-box;
       font-size: 15px;
     }
-    .perk-section {
-      font-size: 0.95em;
-      margin: 10px 0 20px;
-    }
-    .sticky-price {
-      background-color: #0d1a26;
-      color: white;
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
+    button {
+      padding: 12px 24px;
+      background-color: #e84545;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
       font-weight: bold;
-      font-size: 18px;
-    }
-    .sticky-price span {
-      display: block;
-      font-size: 26px;
-      margin-top: 5px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      font-size: 16px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div id="landing" class="centered">
-      <h1>Welcome to MV Digital Tools</h1>
-      <p>Are you ready to save up to 90% on Subscription services?</p>
-      <button onclick="showHowItWorks()">Yes, show me how</button>
+    <div class="centered">
+      <h1>MV Digital Tools</h1>
+      <p>Subscription Form (JSONP Version)</p>
     </div>
-
-    <div id="howItWorks" class="centered" style="display:none;">
-      <h1>Here's how it works</h1>
-      <p>✅ Fill the form — <b>2 minutes</b></p>
-      <p>📧 Instant payment instructions via email</p>
-      <p>✅ Activation within <b>1–2 hours</b> (same day)</p>
-      <p>📞 Need help? <b>Call 7566658</b></p>
-      <button onclick="showForm()">Continue</button>
-    </div>
-
-    <div id="formCard" class="card">
-      <h2>📝 Subscription Request</h2>
-      <p style="text-align:center;">Fill the form to subscribe. Payment instructions will be sent instantly.</p>
+    <div class="card">
       <form id="customerForm">
         <label>Full Name</label>
         <input type="text" name="name" required />
+
         <label>Email Address</label>
         <input type="email" name="email" required />
-        <label>Request Type</label>
-        <select name="requestType" required>
-          <option value="new">New Subscription</option>
-          <option value="renew">Renew Existing</option>
-        </select>
+
         <label>Service</label>
-        <select name="service" id="service" required>
+        <select name="service" required>
           <option value="ChatGPT">ChatGPT Pro</option>
+          <option value="Microsoft 365">Microsoft 365</option>
         </select>
+
         <label>Duration</label>
-        <select name="duration" id="duration" required>
+        <select name="duration" required>
           <option value="1 Month">1 Month</option>
+          <option value="1 Year">1 Year</option>
         </select>
-        <div class="perk-section" id="perkDisplay">
-          <strong>What do you get:</strong><ul><li>Priority access to GPT-4</li><li>Faster response times</li><li>Improved performance during peak hours</li></ul>
-        </div>
-        <label>Notes / Ref</label>
-        <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
-        <div class="sticky-price" id="priceDisplay">🛒 Total Price <span>MVR 100 ($6.49)</span></div>
+
+        <label>Notes</label>
+        <textarea name="notes" rows="2"></textarea>
+
         <button type="submit">Submit</button>
       </form>
     </div>
   </div>
+
   <script>
-    function showHowItWorks() {
-      document.getElementById('landing').style.display = 'none';
-      document.getElementById('howItWorks').style.display = 'block';
-    }
-    function showForm() {
-      document.getElementById('howItWorks').style.display = 'none';
-      document.getElementById('formCard').style.display = 'block';
-    }
-    document.getElementById("customerForm").onsubmit = async function (e) {
+    document.getElementById("customerForm").onsubmit = function(e) {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(this).entries());
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        const result = await response.json();
-        if (result.status === "success") {
-          alert("✅ Request submitted! Please check your email for payment instructions.");
-          this.reset();
-        } else {
-          alert("❌ Submission failed.");
-        }
-      } catch (err) {
-        alert("❌ Connection error: Please try again later.");
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      const callbackName = "jsonpCallback_" + Date.now();
+      window[callbackName] = function(response) {
+        alert("✅ Submitted!");
+        document.getElementById("customerForm").reset();
+        delete window[callbackName];
+        script.remove();
+      };
+      const params = new URLSearchParams();
+      for (const [k, v] of Object.entries(data)) {
+        params.append(k, v);
       }
-    };
+      params.append("callback", callbackName);
+      const script = document.createElement("script");
+      script.src = "https://script.google.com/macros/s/AKfycbwFlP2Z7qeFH0X3smevW5XGODvskl0CibYGissxfbigEy09OwBCjjchiGRU33vp8fZ9tA/exec?" + params.toString();
+      document.body.appendChild(script);
+    }
   </script>
 </body>
 </html>
