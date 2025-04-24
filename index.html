@@ -1,274 +1,349 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <base target="_top">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0d1a26;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MV Digital Tools - Subscription Form</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #0d1a26;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        min-height: 100vh;
+      }
 
-    .card, .how-it-works {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px 25px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      animation: fadeIn 0.5s ease;
-    }
+      .card {
+        background-color: #fff;
+        color: #333;
+        border-radius: 12px;
+        padding: 25px;
+        max-width: 420px;
+        width: 100%;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        animation: fadeIn 0.5s ease;
+      }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    h2 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
-      color: #222;
-      text-align: center;
-    }
+      h2 {
+        text-align: center;
+        margin-top: 0;
+        font-size: 1.4em;
+      }
 
-    p {
-      text-align: center;
-    }
+      p {
+        font-size: 0.95em;
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-    ul {
-      padding-left: 20px;
-    }
+      label {
+        display: block;
+        font-weight: bold;
+        font-size: 0.85em;
+        margin-top: 12px;
+        margin-bottom: 5px;
+      }
 
-    li {
-      margin-bottom: 10px;
-    }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
 
-    button {
-      background-color: #e84545;
-      border: none;
-      color: white;
-      padding: 12px;
-      width: 100%;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+      .price-summary {
+        background-color: #0d1a26;
+        color: white;
+        border-radius: 10px;
+        padding: 16px;
+        margin: 20px 0 10px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+      }
 
-    button:hover {
-      background-color: #cc3c3c;
-    }
+      .price-summary span {
+        display: block;
+        font-size: 20px;
+        margin-top: 4px;
+        font-weight: 700;
+      }
 
-    label {
-      font-size: 0.85em;
-      margin-top: 10px;
-      display: block;
-      font-weight: 600;
-    }
+      button {
+        background-color: #e84545;
+        border: none;
+        border-radius: 8px;
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+      }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-    }
+      button:hover {
+        background-color: #cc3c3c;
+      }
 
-    .price-summary {
-      background-color: #0d1a26;
-      color: white;
-      text-align: center;
-      font-weight: bold;
-      border-radius: 10px;
-      padding: 16px;
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
+      #perkDisplay ul {
+        margin-top: 0;
+        margin-bottom: 15px;
+        padding-left: 20px;
+      }
 
-    .price-summary span {
-      display: block;
-      font-size: 26px;
-      margin-top: 5px;
-    }
+      #perkDisplay ul li {
+        margin-bottom: 6px;
+        font-size: 0.9em;
+      }
 
-    .hidden { display: none; }
+      .avatar-preview {
+        text-align: center;
+        margin-bottom: 10px;
+      }
 
-    #perkDisplay ul {
-      padding-left: 20px;
-    }
+      .avatar-preview img {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        object-fit: contain;
+        background: #f0f0f0;
+        padding: 4px;
+      }
 
-    #perkDisplay li {
-      margin-bottom: 8px;
-    }
+      @media (max-width: 480px) {
+        body {
+          padding: 12px;
+        }
+        .card {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>📝 Subscription Request</h2>
+      <p>Fill the form to subscribe. You'll receive payment instructions via email.</p>
 
-    @media (max-width: 480px) {
-      body { padding: 10px; }
-      input, select, textarea { font-size: 16px; }
-    }
-  </style>
-</head>
-<body>
+      <form id="customerForm">
+        <label>👤 Full Name</label>
+        <input type="text" name="name" required />
 
-  <div class="card" id="landingPage">
-    <h2>Welcome to MV Digital Tools</h2>
-    <p>Are you ready to save up to 90% on subscription services?</p>
-    <button onclick="showHow()">Yes, show me how</button>
-  </div>
+        <label>📞 Contact Number</label>
+        <input type="tel" name="contact" required />
 
-  <div class="how-it-works hidden" id="howItWorks">
-    <h2>📋 Here's how it works:</h2>
-    <ul>
-      <li>📝 Fill out the form — <strong>2 minutes</strong></li>
-      <li>📧 Instant payment instructions via email</li>
-      <li>✅ Activation within <strong>1–2 hours</strong> (same day)</li>
-      <li>📞 Need help? <span style="color:#e84545;font-weight:bold;">Call 7566658</span></li>
-    </ul>
-    <button onclick="showForm()">Continue</button>
-  </div>
+        <label>📧 Email Address</label>
+        <input type="email" name="email" required />
 
-  <div class="card hidden" id="formCard">
-    <h2>📝 Subscription Request</h2>
-    <p>Fill the form to subscribe. You'll receive payment instructions via email.</p>
+        <label>🛠️ Request Type</label>
+        <select name="requestType" required>
+          <option value="new">New Subscription</option>
+          <option value="renew">Renew Existing</option>
+        </select>
 
-    <form id="customerForm">
-      <label>👤 Full Name</label>
-      <input type="text" name="name" required>
+        <label>🧩 Service</label>
+        <div class="avatar-preview">
+          <img id="serviceAvatar" src="" alt="Service Logo" />
+        </div>
+        <select name="service" id="service" required>
+          <option value="ChatGPT">ChatGPT Pro</option>
+          <option value="Microsoft 365">Microsoft 365</option>
+          <option value="Canva Pro">Canva Pro</option>
+          <option value="Duolingo">Duolingo</option>
+          <option value="Assignment Check">Assignment Check</option>
+          <option value="Perplexity">Perplexity Pro</option>
+          <option value="Amazon Prime Video">Amazon Prime Video</option>
+          <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
+        </select>
 
-      <label>📞 Contact Number</label>
-      <input type="tel" name="contact" required>
+        <label>⏳ Duration</label>
+        <select name="duration" id="duration" required></select>
 
-      <label>📧 Email Address</label>
-      <input type="email" name="email" required>
+        <div class="price-summary">
+          🛒 Total Price
+          <span id="priceDisplay">MVR 0 ($0.00)</span>
+        </div>
 
-      <label>🛠️ Request Type</label>
-      <select name="requestType" required>
-        <option value="new">New Subscription</option>
-        <option value="renew">Renew Existing</option>
-      </select>
+        <div id="perkDisplay">
+          <strong>🔥 What do you get:</strong>
+          <ul></ul>
+        </div>
 
-      <label>🧩 Service</label>
-      <select name="service" id="service" required onchange="updateForm()">
-        <option value="ChatGPT">ChatGPT Pro</option>
-        <option value="Microsoft 365">Microsoft 365</option>
-        <option value="Canva Pro">Canva Pro</option>
-        <option value="Duolingo">Duolingo</option>
-      </select>
+        <label>🗒️ Notes / Ref</label>
+        <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
 
-      <label>⏳ Duration</label>
-      <select name="duration" id="duration" onchange="updatePrice()" required>
-        <option value="1 Month">1 Month</option>
-        <option value="6 Months">6 Months</option>
-        <option value="1 Year">1 Year</option>
-      </select>
+        <input type="hidden" name="amount" id="price" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
 
-      <div class="price-summary">
-        🛒 Total Price
-        <span id="priceDisplay">MVR 100 ($6.49)</span>
-      </div>
+    <script>
+      const serviceEl = document.getElementById("service");
+      const durationEl = document.getElementById("duration");
+      const priceDisplay = document.getElementById("priceDisplay");
+      const priceInput = document.getElementById("price");
+      const perkDisplay = document.querySelector("#perkDisplay ul");
+      const avatar = document.getElementById("serviceAvatar");
 
-      <div id="perkDisplay">
-        <strong>🔥 What do you get:</strong>
-        <ul id="perkList"></ul>
-      </div>
+      const avatarMap = {
+        "ChatGPT": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+        "Microsoft 365": "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+        "Canva Pro": "https://static.canva.com/static/images/favicon.ico",
+        "Duolingo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cb/Duolingo_logo.svg/1200px-Duolingo_logo.svg.png",
+        "Assignment Check": "https://cdn-icons-png.flaticon.com/512/942/942748.png",
+        "Perplexity": "https://uploads-ssl.webflow.com/64b7f2646af4ad95ec6d9b64/64df1cbb9bfb6ecaf1b3fbd7_PerplexityAI.png",
+        "Amazon Prime Video": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png",
+        "Adobe Creative Cloud": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Adobe_Creative_Cloud_rainbow_icon.svg"
+      };
 
-      <label>🗒️ Notes / Ref</label>
-      <textarea name="notes" rows="3" placeholder="Optional..."></textarea>
+      const priceMap = {
+        "ChatGPT": { "1 Month": 100, "6 Months": 600, "1 Year": 1200 },
+        "Microsoft 365": { "1 Year": 500 },
+        "Canva Pro": { "1 Year": 150 },
+        "Duolingo": { "1 Year": 150 },
+        "Assignment Check": {
+          "Basic AI Detection": 50,
+          "AI Bypass": 100,
+          "AI Bypass Plus": 300
+        },
+        "Perplexity": { "1 Year": 200 },
+        "Amazon Prime Video": { "1 Year": 999 },
+        "Adobe Creative Cloud": { "1 Month": 450 }
+      };
 
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+      const durationOptions = {
+        "ChatGPT": ["1 Month", "6 Months", "1 Year"],
+        "Microsoft 365": ["1 Year"],
+        "Canva Pro": ["1 Year"],
+        "Duolingo": ["1 Year"],
+        "Assignment Check": ["Basic AI Detection", "AI Bypass", "AI Bypass Plus"],
+        "Perplexity": ["1 Year"],
+        "Amazon Prime Video": ["1 Year"],
+        "Adobe Creative Cloud": ["1 Month"]
+      };
 
-  <script>
-    function showHow() {
-      document.getElementById('landingPage').classList.add('hidden');
-      document.getElementById('howItWorks').classList.remove('hidden');
-    }
+      const perksMap = {
+        "ChatGPT": [
+          "Priority access to GPT-4",
+          "Faster response times",
+          "Improved performance during peak hours"
+        ],
+        "Microsoft 365": [
+          "Full access to Word, Excel, PowerPoint",
+          "1TB OneDrive cloud storage",
+          "Outlook email & calendar",
+          "Install on up to 5 devices"
+        ],
+        "Canva Pro": [
+          "Unlimited premium templates & elements",
+          "Magic Resize and Background Remover",
+          "Brand Kit and content planner",
+          "Team collaboration features"
+        ],
+        "Duolingo": [
+          "No ads",
+          "Unlimited hearts (mistakes)",
+          "Personalized practice",
+          "Mastery quizzes and offline access"
+        ],
+        "Assignment Check": [
+          "Basic AI Detection - Basic detection on all major AI Detectors including Turnitin + MVR 15 per extra run",
+          "AI Bypass - Changes for 0% detection + MVR 25 per correction/run",
+          "AI Bypass Plus - All features + unlimited submissions"
+        ],
+        "Perplexity": [
+          "Faster and more accurate answers",
+          "Expanded formatting & citations",
+          "Sources in context",
+          "No daily usage limits"
+        ],
+        "Amazon Prime Video": [
+          "Unlimited streaming of movies and series",
+          "Exclusive Prime Originals",
+          "Watch on multiple devices",
+          "Offline downloads"
+        ],
+        "Adobe Creative Cloud": [
+          "Photoshop, Illustrator, Premiere Pro & more",
+          "100GB cloud storage",
+          "Fonts, stock assets, and portfolio tools",
+          "Cross-device sync"
+        ]
+      };
 
-    function showForm() {
-      document.getElementById('howItWorks').classList.add('hidden');
-      document.getElementById('formCard').classList.remove('hidden');
-    }
+      function updateDurationOptions() {
+        const service = serviceEl.value;
+        const options = durationOptions[service] || [];
+        durationEl.innerHTML = "";
+        options.forEach(opt => {
+          const el = document.createElement("option");
+          el.value = opt;
+          el.textContent = opt;
+          durationEl.appendChild(el);
+        });
+      }
 
-    const prices = {
-      "ChatGPT": 100,
-      "Microsoft 365": 500,
-      "Canva Pro": 150,
-      "Duolingo": 150
-    };
+      function updatePrice() {
+        const service = serviceEl.value;
+        const duration = durationEl.value;
+        let price = priceMap[service]?.[duration] || 0;
+        const usd = (price / 15.42).toFixed(2);
+        priceInput.value = `MVR ${price}`;
+        priceDisplay.textContent = `MVR ${price} ($${usd})`;
+      }
 
-    const perksMap = {
-      "ChatGPT": [
-        "Priority access to GPT-4",
-        "Faster response times",
-        "Improved performance during peak hours"
-      ],
-      "Microsoft 365": [
-        "Full access to Word, Excel, PowerPoint",
-        "1TB OneDrive cloud storage",
-        "Outlook email & calendar",
-        "Install on up to 5 devices"
-      ],
-      "Canva Pro": [
-        "Unlimited premium templates & elements",
-        "Magic Resize and Background Remover",
-        "Brand Kit and content planner",
-        "Team collaboration features"
-      ],
-      "Duolingo": [
-        "No ads",
-        "Unlimited hearts (mistakes)",
-        "Personalized practice",
-        "Mastery quizzes and offline access"
-      ]
-    };
+      function updatePerks() {
+        const service = serviceEl.value;
+        const perks = perksMap[service] || [];
+        perkDisplay.innerHTML = "";
+        perks.forEach(p => {
+          const li = document.createElement("li");
+          li.textContent = p;
+          perkDisplay.appendChild(li);
+        });
+      }
 
-    function updateForm() {
-      updatePrice();
-      updatePerks();
-    }
+      function updateAvatar() {
+        const service = serviceEl.value;
+        avatar.src = avatarMap[service] || "";
+      }
 
-    function updatePrice() {
-      const service = document.getElementById('service').value;
-      const price = prices[service] || 100;
-      const usd = (price / 15.42).toFixed(2);
-      document.getElementById('priceDisplay').innerText = `MVR ${price} ($${usd})`;
-    }
+      function updateForm() {
+        updateDurationOptions();
+        updatePrice();
+        updatePerks();
+        updateAvatar();
+      }
 
-    function updatePerks() {
-      const service = document.getElementById('service').value;
-      const perks = perksMap[service] || [];
-      const list = document.getElementById('perkList');
-      list.innerHTML = "";
-      perks.forEach(p => {
-        const li = document.createElement('li');
-        li.textContent = p;
-        list.appendChild(li);
-      });
-    }
+      serviceEl.addEventListener("change", updateForm);
+      durationEl.addEventListener("change", updatePrice);
+      window.onload = updateForm;
 
-    document.getElementById('customerForm').onsubmit = function (e) {
-      e.preventDefault();
-      alert("✅ Request submitted! Payment details will be emailed to you.");
-      this.reset();
-      updatePrice();
-      updatePerks();
-    };
-
-    window.onload = () => {
-      updatePrice();
-      updatePerks();
-    };
-  </script>
-</body>
+      document.getElementById("customerForm").onsubmit = function (e) {
+        e.preventDefault();
+        alert("✅ Your request has been submitted.\n\n📨 Please send the payment slip to Viber 7566658.");
+        this.reset();
+        updateForm();
+      };
+    </script>
+  </body>
 </html>
